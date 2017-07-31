@@ -1,0 +1,10 @@
+{
+  "name": "ignite-shim",
+  "description": "A temporary package.json created to prevent node from wandering too far.",
+  "repository": "infinitered/ignite",
+  "license": "MIT",
+  "devDependencies": {
+    "ignite-ir-boilerplate": "^2.0.2"
+  },
+  "dependencies": {}
+}
