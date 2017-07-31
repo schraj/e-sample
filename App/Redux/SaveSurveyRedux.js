@@ -4,8 +4,8 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  saveQuestion: ['id', 'answer'],
-  saveSurveyRequest: ['participantId'],
+  saveAnswer: ['id', 'answer'],
+  saveSurveyRequest: null,
   saveSurveySuccess: null,
   saveSurveyFailure: null
 })
@@ -22,12 +22,14 @@ export const INITIAL_STATE = Immutable({
 })
 
 /* ------------- Reducers ------------- */
-export const saveQuestion = (state, { id, answer }) => {
+export const saveAnswer = (state, { id, answer }) => {
   newAnswers = [...state.answers, [id, answer]];
   state.merge({ saving: true, answers: newAnswers });
+  console.tron.log(state);
+  return state;
 }
 
-// save a survey response
+// save a survey array response to server
 export const request = (state, action) =>
   state.merge({ saving: true })
 
@@ -43,7 +45,7 @@ export const failure = (state) =>
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.SAVEQUESTION]: saveQuestion,
+  [Types.SAVEANSWER]: saveAnswer,
   [Types.SAVESURVEY_REQUEST]: request,
   [Types.SAVESURVEY_SUCCESS]: success,
   [Types.SAVESURVEY_FAILURE]: failure
