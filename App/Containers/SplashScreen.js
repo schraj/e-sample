@@ -19,7 +19,7 @@ export default class SplashScreen extends Component {
               Momentary Experience Sampler
             </Text>
             <Button
-              onPress={() => this.props.navigation.navigate('Question1Screen')}
+              onPress={() => this.props.navigation.navigate('QuestionScreen', { id: 1 })}
               title="Go To Questions"
             />
           </View>

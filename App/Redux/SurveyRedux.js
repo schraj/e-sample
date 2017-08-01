@@ -4,10 +4,11 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  saveAnswer: ['id', 'answer'],
-  saveSurveyRequest: null,
-  saveSurveySuccess: null,
-  saveSurveyFailure: null
+  saveSurveyType: ['surveyType'],
+  saveAnswer: ['questionId', 'answer'],
+  submitSurveyRequest: null,
+  submitSurveySuccess: null,
+  submitSurveyFailure: null
 })
 
 export const SurveyTypes = Types
@@ -17,16 +18,23 @@ export default Creators
 
 export const INITIAL_STATE = Immutable({
   answers: [],
+  surveyType: null,
   saving: null,
   error: null
 })
 
 /* ------------- Reducers ------------- */
-export const saveAnswer = (state, { id, answer }) => {
-  newAnswers = [...state.answers, [id, answer]];
-  state.merge({ saving: true, answers: newAnswers });
-  console.tron.log(state);
-  return state;
+export const saveSurveyType = (state, action) => {
+  const { surveyType } = action;
+  console.tron.log({ message: 'in save survey type', state: state, action: action });
+  return state.merge({ surveyType: surveyType });
+}
+
+export const saveAnswer = (state, action) => {
+  const { questionId, answer } = action;
+  console.tron.log({ message: 'in save answer', state: state, action: action });
+  newAnswers = [...state.answers, [questionId, answer]];
+  return Immutable.set(state, 'answers', newAnswers);
 }
 
 // save a survey array response to server
@@ -45,8 +53,9 @@ export const failure = (state) =>
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.SAVEANSWER]: saveAnswer,
-  [Types.SAVESURVEY_REQUEST]: request,
-  [Types.SAVESURVEY_SUCCESS]: success,
-  [Types.SAVESURVEY_FAILURE]: failure
+  [Types.SAVE_SURVEY_TYPE]: saveSurveyType,
+  [Types.SAVE_ANSWER]: saveAnswer,
+  [Types.SUBMIT_SURVEY_REQUEST]: request,
+  [Types.SUBMIT_SURVEY_SUCCESS]: success,
+  [Types.SUBMIT_SURVEY_FAILURE]: failure
 })

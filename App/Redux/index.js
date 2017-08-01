@@ -7,9 +7,7 @@ export default () => {
   /* ------------- Assemble The Reducers ------------- */
   const rootReducer = combineReducers({
     nav: require('./NavigationRedux').reducer,
-    //github: require('./GithubRedux').reducer,
-    //search: require('./SearchRedux').reducer,
-    saveSurvey: require('./SaveSurveyRedux').reducer,
+    survey: require('./SurveyRedux').reducer,
     setupParticipant: require('./SetupParticipantRedux').reducer,
     form: formReducer
   })

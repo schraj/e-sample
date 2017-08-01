@@ -1,9 +1,6 @@
 import { StackNavigator } from 'react-navigation'
 import SplashScreen from '../Containers/SplashScreen'
-import Question1Screen from '../Containers/Question1Screen'
-import Question2Screen from '../Containers/Question2Screen'
-import Question3Screen from '../Containers/Question3Screen'
-import Question4Screen from '../Containers/Question4Screen'
+import QuestionScreen from '../Containers/QuestionScreen'
 import EndScreen from '../Containers/EndScreen'
 
 import styles from './Styles/NavigationStyles'
@@ -13,21 +10,9 @@ const PrimaryNav = StackNavigator({
   SplashScreen: {
     screen: SplashScreen
   },
-  Question1Screen: {
-    //path: "question/:id",
-    screen: Question1Screen
-  },
-  Question2Screen: {
-    //path: "question/:id",
-    screen: Question2Screen
-  },
-  Question3Screen: {
-    //path: "question/:id",
-    screen: Question3Screen
-  },
-  Question4Screen: {
-    //path: "question/:id",
-    screen: Question4Screen
+  QuestionScreen: {
+    path: "QuestionScreen/:id",
+    screen: QuestionScreen
   },
   EndScreen: {
     screen: EndScreen

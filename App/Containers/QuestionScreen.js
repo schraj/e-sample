@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import SaveSurveyActions from '../Redux/SaveSurveyRedux'
+import SurveyActions from '../Redux/SurveyRedux'
 import { ScrollView, Text, Image, View, Slider, Button } from 'react-native'
 import { Images } from '../Themes'
 
@@ -8,11 +8,21 @@ import { Images } from '../Themes'
 // Styles
 import styles from './Styles/ScreenStyles'
 
-class Question1Screen extends Component {
+const questions = [
+  { id: 1, left: 'No Stress', right: 'Extremely Stressed', question: 'How stressed are you right now?' },
+  { id: 2, left: 'Anxious', right: 'Calm', question: 'How do you feel right now?' },
+  { id: 3, left: 'No energy', right: 'Lots of energy', question: 'How much energy do you have right now?' },
+]
+
+class QuestionScreen extends Component {
   constructor(props) {
     super(props);
+    //console.tron.log({ message: 'in constructor', object: props });
+    const questionId = props.navigation.state.params.id;
+    this.questionObject = questions.find(q => q.id == questionId);
     this.state = {
-      value: 1
+      questionId,
+      answer: 1,
     };
 
     this.submit = this.submit.bind(this);
@@ -20,8 +30,13 @@ class Question1Screen extends Component {
 
   submit() {
     console.tron.log({ message: 'in submit', object: this.state });
-    this.props.saveAnswer(1, this.state.value);
-    this.props.navigation.navigate('Question2Screen');
+    this.props.saveAnswer(this.state.questionId, this.state.answer);
+    if (this.state.questionId === questions.length) {
+      this.props.submitResults();
+      this.props.navigation.navigate('EndScreen');
+    } else {
+      this.props.navigation.navigate('QuestionScreen', { id: this.state.questionId + 1 });
+    }
   }
 
   render() {
@@ -30,23 +45,22 @@ class Question1Screen extends Component {
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
         <View style={styles.questionHeader} >
           <Text style={styles.questionHeaderText}>
-            How stressed are you today?
+            {this.questionObject.question}
           </Text>
         </View>
         <View style={styles.questionBody} >
           <View style={styles.sliderValues}>
-            <Text style={styles.sliderLeftValue}>No Stress</Text>
-            <Text style={styles.sliderRightValue}>Extremely Stressed</Text>
+            <Text style={styles.sliderLeftValue}>{this.questionObject.left}</Text>
+            <Text style={styles.sliderRightValue}>{this.questionObject.right}</Text>
           </View>
 
           <Slider style={styles.slider}
-            {...this.props }
             minimumValue={1}
             maximumValue={100}
             maximumTrackTintColor={"#FFF"}
             minimumTrackTintColor={"#FFF"}
             step={1}
-            onValueChange={(value) => this.setState({ value: value })}
+            onValueChange={(value) => this.setState({ answer: value })}
           />
           <Button
             style={styles.nextButton}
@@ -67,12 +81,15 @@ class Question1Screen extends Component {
   }
 }
 
-// wraps dispatch to create nicer functions to call within our component
 const mapDispatchToProps = (dispatch) => ({
   saveAnswer: (id, answer) => {
     console.tron.log({ message: 'in save answer', id: id, answer: answer })
-    dispatch(SaveSurveyActions.saveAnswer(id, answer));
+    dispatch(SurveyActions.saveAnswer(id, answer));
+  },
+  submitResults: () => {
+    console.tron.log({ message: 'in submit results' })
+    dispatch(SurveyActions.saveSurveyRequest());
   }
 })
 
-export default connect(null, mapDispatchToProps)(Question1Screen)
+export default connect(null, mapDispatchToProps)(QuestionScreen)
