@@ -88,7 +88,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   submitResults: () => {
     console.tron.log({ message: 'in submit results' })
-    dispatch(SurveyActions.saveSurveyRequest());
+    dispatch(SurveyActions.submitSurveyRequest());
   }
 })
 
