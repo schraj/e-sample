@@ -32,7 +32,7 @@ class SplashScreen extends Component {
             </Text>
             {!this.state.hasParticipantInfo &&
               <View>
-                <Text style={styles.setupHeaderText}>
+                <Text style={styles.splashDescription}>
                   Welcome to the Sampling App. We need to collect a little info to set things up.
                 </Text>
                 <Button
@@ -44,7 +44,7 @@ class SplashScreen extends Component {
 
             {this.state.hasParticipantInfo &&
               <View>
-                <Text style={styles.setupHeaderText}>
+                <Text style={styles.splashDescription}>
                   Please answer the following three questions.
                 </Text>
                 <Button

@@ -19,11 +19,20 @@ export default StyleSheet.create({
     marginTop: Metrics.baseMargin,
     marginBottom: 50
   },
+  splashDescription: {
+    ...Fonts.style.h5,
+    color: Colors.silver,
+    alignItems: 'center',
+    marginTop: 30,
+    marginBottom: 30,
+    width: 300
+  },
   slider: {
     width: 300,
     marginTop: Metrics.baseMargin,
     marginBottom: 50
   },
+
   sliderValues: {
     flexDirection: 'row',
   },
@@ -59,7 +68,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   setupHeaderText: {
-    ...Fonts.style.h5,
+    ...Fonts.style.h1,
     color: Colors.silver,
     alignItems: 'center',
     marginTop: 30,
@@ -73,11 +82,16 @@ export default StyleSheet.create({
   setupQuestionContainer: {
     flex: 1,
     alignItems: 'center',
+    marginBottom: 50
+  },
+  setupQuestionTextInput: {
+    marginTop: 15,
+    backgroundColor: Colors.silver,
+    width: 200,
   },
   setupQuestionText: {
     ...Fonts.style.h5,
     color: Colors.silver,
     alignItems: 'center',
-    marginTop: 100,
   },
 })

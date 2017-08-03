@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { ScrollView, Text, Image, View, Slider, Button, TextInput } from 'react-native'
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import SurveyActions from '../Redux/SurveyRedux'
-import { ScrollView, Text, Image, View, Slider, Button } from 'react-native'
 import { Images } from '../Themes'
 
 // Styles
@@ -10,17 +11,56 @@ import styles from './Styles/ScreenStyles'
 class SetupScreen extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isDateTimePickerVisible: false,
+      selectedDateTime: null
+    };
 
     this.submit = this.submit.bind(this);
+    this.getSelectedTime = this.getSelectedTime.bind(this);
+    this.getSelectedTimeAsString = this.getSelectedTimeAsString.bind(this);
+  }
+
+  showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
+
+  hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+
+  handleDatePicked = (date) => {
+    this.hideDateTimePicker();
+    this.setState({
+      selectedDateTime: date
+    });
+  };
+
+  getSelectedTime() {
+    if (this.state.selectedDateTime) {
+      const hr = this.state.selectedDateTime.getHours().toString();
+      let min = this.state.selectedDateTime.getMinutes().toString();
+      if (min.length === 1) {
+        min = '0' + min;
+      }
+      return { hr, min };
+    } else {
+      return null;
+    }
+  }
+
+  getSelectedTimeAsString() {
+    const timeInfo = this.getSelectedTime();
+    if (timeInfo) {
+      return `${timeInfo.hr}:${timeInfo.min}`;
+    } else {
+      return 'Not Set';
+    }
   }
 
   submit() {
     // info
-    let hr = 8;
-    let min = 30;
+    const timeInfo = this.getSelectedTime();
     let setupInfo = {
       id: 10,
-      eveningSurveyTime: new Date(1970, 1, 1, hr, min),
+      eveningSurveyHour: timeInfo.hr,
+      eveningSurveyMinute: timeInfo.min
     };
 
     this.props.saveSetupInfo(setupInfo);
@@ -33,22 +73,28 @@ class SetupScreen extends Component {
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
         <View style={styles.setupHeader} >
           <Text style={styles.setupHeaderText}>
-            Welcome to the Sampling App. We need to collect a little info to set things up.
+            App Setup
           </Text>
         </View>
         <View style={styles.setupBody} >
           <View style={styles.setupQuestionContainer}>
+            <Text style={styles.setupQuestionText}>Your participant id:</Text>
+            <TextInput style={styles.setupQuestionTextInput} />
+          </View>
+          <View style={styles.setupQuestionContainer}>
             <Text style={styles.setupQuestionText}>When is your bedtime?</Text>
+            <Text style={styles.setupQuestionText}>{this.getSelectedTimeAsString()}</Text>
+            <Button title="Click To Set" onPress={this.showDateTimePicker} />
+            <DateTimePicker
+              isVisible={this.state.isDateTimePickerVisible}
+              onConfirm={this.handleDatePicked}
+              onCancel={this.hideDateTimePicker}
+              mode={'time'}
+              datePickerModeAndroid={'spinner'}
+              data={this.state.selectedDateTime}
+            />
           </View>
 
-          <Slider style={styles.slider}
-            minimumValue={1}
-            maximumValue={100}
-            maximumTrackTintColor={"#FFF"}
-            minimumTrackTintColor={"#FFF"}
-            step={1}
-            onValueChange={(value) => this.setState({ answer: value })}
-          />
           <Button
             style={styles.nextButton}
             onPress={() => { this.submit(); }}
