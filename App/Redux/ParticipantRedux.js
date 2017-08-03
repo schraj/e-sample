@@ -4,12 +4,13 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  setupParticpantRequest: ['participantId'],
-  setupParticpantSuccess: null,
-  setupParticpantFailure: null
+  activateParticipant: ['participantId', 'eveningSurveyTimeHour', 'eveningSurveyTimeMinute'],
+  saveParticipantRequest: ['participantId', 'eveningSurveyTimeHour', 'eveningSurveyTimeMinute'],
+  saveParticipantSuccess: null,
+  saveParticipantFailure: null
 })
 
-export const SetupTypes = Types
+export const ParticipantTypes = Types
 export default Creators
 
 /* ------------- Initial State ------------- */
@@ -17,14 +18,20 @@ export default Creators
 export const INITIAL_STATE = Immutable({
   saving: null,
   error: null,
-  participantId: null
+  participantId: null,
+  eveningSurveyTimeHour: null,
+  eveningSurveyTimeMinute: null,
 })
 
 /* ------------- Reducers ------------- */
+// successful save
+export const activate = (state, action) => {
+  return state;
+}
 
 // save a setup response
-export const request = (state, { participantId }) =>
-  state.merge({ saving: true, participantId })
+export const request = (state, { participantId, eveningSurveyTimeHour, eveningSurveyTimeMinute }) =>
+  state.merge({ saving: true, participantId, eveningSurveyTimeHour, eveningSurveyTimeMinute })
 
 // successful save
 export const success = (state, action) => {
@@ -38,7 +45,8 @@ export const failure = (state) =>
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.SETUP_PARTICIPANT_REQUEST]: request,
-  [Types.SETUP_PARTICIPANT_SUCCESS]: success,
-  [Types.SETUP_PARTICIPANT_FAILURE]: failure
+  [Types.ACTIVATE_PARTICIPANT]: activate,
+  [Types.SAVE_PARTICIPANT_REQUEST]: request,
+  [Types.SAVE_PARTICIPANT_SUCCESS]: success,
+  [Types.SAVE_PARTICIPANT_FAILURE]: failure
 })

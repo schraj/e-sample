@@ -32,7 +32,6 @@ export default StyleSheet.create({
     marginTop: Metrics.baseMargin,
     marginBottom: 50
   },
-
   sliderValues: {
     flexDirection: 'row',
   },

@@ -13,6 +13,7 @@ import { SurveyTypes } from '../Redux/SurveyRedux'
 
 import { startup } from './StartupSagas'
 import { submitSurveyData } from './SurveySagas'
+import { activateParticipantData, saveParticipantData } from './ParticipantSagas'
 
 /* ------------- API ------------- */
 
@@ -27,5 +28,9 @@ export default function* root() {
     takeLatest(StartupTypes.STARTUP, startup),
 
     takeLatest(SurveyTypes.SUBMIT_SURVEY_REQUEST, submitSurveyData, Api),
+
+    takeLatest(ParticipantTypes.ACTIVATE_PARTICIPANT, activateParticipantData),
+
+    takeLatest(ParticipantTypes.SAVE_PARTICIPANT_REQUEST, saveParticipantData),
   ]
 }

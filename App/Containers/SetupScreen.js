@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { ScrollView, Text, Image, View, Slider, Button, TextInput } from 'react-native'
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import SurveyActions from '../Redux/SurveyRedux'
+import ParticipantActions from '../Redux/ParticipantRedux'
 import { Images } from '../Themes'
 
 // Styles
@@ -34,12 +34,12 @@ class SetupScreen extends Component {
 
   getSelectedTime() {
     if (this.state.selectedDateTime) {
-      const hr = this.state.selectedDateTime.getHours().toString();
-      let min = this.state.selectedDateTime.getMinutes().toString();
-      if (min.length === 1) {
-        min = '0' + min;
+      const hour = this.state.selectedDateTime.getHours().toString();
+      let minute = this.state.selectedDateTime.getMinutes().toString();
+      if (minute.length === 1) {
+        minute = '0' + minute;
       }
-      return { hr, min };
+      return { hour, minute };
     } else {
       return null;
     }
@@ -48,7 +48,7 @@ class SetupScreen extends Component {
   getSelectedTimeAsString() {
     const timeInfo = this.getSelectedTime();
     if (timeInfo) {
-      return `${timeInfo.hr}:${timeInfo.min}`;
+      return `${timeInfo.hour}:${timeInfo.minute}`;
     } else {
       return 'Not Set';
     }
@@ -59,8 +59,8 @@ class SetupScreen extends Component {
     const timeInfo = this.getSelectedTime();
     let setupInfo = {
       id: 10,
-      eveningSurveyHour: timeInfo.hr,
-      eveningSurveyMinute: timeInfo.min
+      eveningSurveyHour: timeInfo.hour,
+      eveningSurveyMinute: timeInfo.minute
     };
 
     this.props.saveSetupInfo(setupInfo);
@@ -114,9 +114,9 @@ class SetupScreen extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  saveSetupInfo: () => {
+  saveSetupInfo: (setupInfo) => {
     console.tron.log({ message: 'in save setup' })
-    //dispatch(SurveyActions.submitSurveyRequest());
+    dispatch(ParticipantActions.saveParticipantRequest(setupInfo.participantId, eveningSurveyTimeHour, eveningSurveyTimeMinute));
   }
 })
 
