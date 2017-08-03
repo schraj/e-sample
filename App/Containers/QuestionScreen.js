@@ -33,7 +33,7 @@ class QuestionScreen extends Component {
     this.props.saveAnswer(this.state.questionId, this.state.answer);
     if (this.state.questionId === questions.length) {
       this.props.submitResults();
-      this.props.navigation.navigate('EndScreen');
+      this.props.navigation.navigate('EndScreen', { from: 'survey' });
     } else {
       this.props.navigation.navigate('QuestionScreen', { id: this.state.questionId + 1 });
     }

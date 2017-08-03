@@ -54,4 +54,30 @@ export default StyleSheet.create({
     flex: 3,
     alignItems: 'center',
   },
+  setupHeader: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  setupHeaderText: {
+    ...Fonts.style.h5,
+    color: Colors.silver,
+    alignItems: 'center',
+    marginTop: 30,
+    marginBottom: 30,
+    width: 300
+  },
+  setupBody: {
+    flex: 3,
+    alignItems: 'center',
+  },
+  setupQuestionContainer: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  setupQuestionText: {
+    ...Fonts.style.h5,
+    color: Colors.silver,
+    alignItems: 'center',
+    marginTop: 100,
+  },
 })

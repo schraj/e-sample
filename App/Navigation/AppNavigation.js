@@ -1,5 +1,6 @@
 import { StackNavigator } from 'react-navigation'
 import SplashScreen from '../Containers/SplashScreen'
+import SetupScreen from '../Containers/SetupScreen'
 import QuestionScreen from '../Containers/QuestionScreen'
 import EndScreen from '../Containers/EndScreen'
 
@@ -10,11 +11,15 @@ const PrimaryNav = StackNavigator({
   SplashScreen: {
     screen: SplashScreen
   },
+  SetupScreen: {
+    screen: SetupScreen
+  },
   QuestionScreen: {
     path: "QuestionScreen/:id",
     screen: QuestionScreen
   },
   EndScreen: {
+    path: "EndScreen/:from",
     screen: EndScreen
   }
 }, {

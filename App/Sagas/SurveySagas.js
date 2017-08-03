@@ -1,25 +1,25 @@
-import { call, put } from 'redux-saga/effects'
+import { call, put, select } from 'redux-saga/effects'
 import { path } from 'ramda'
-import { submitSurvey } from '../services/firebaseApi'
+import { submitSurvey } from '../Services/firebaseApi'
 import SurveyActions from '../Redux/SurveyRedux'
 
-export const getSuveyInfo = (state) => state.survey
-export const getParticipantInfo = (state) => state.participant
-
 export function* submitSurveyData(api) {
-  let survey = yield select(getSurveyInfo); // <-- get the project
-  let participantInfo = yield select(getParticipantInfo); // <-- get the project
+  let survey = yield select((state) => state.survey);
+  let participantInfo = yield select((state) => state.participant);
 
-  const survey = { surveyType: survey.surveyType, answers: answers }
-  const participantId = participantInfo.participantId;
+  const newSurvey = { surveyType: survey.surveyType, answers: survey.answers };
+  //const participantId = participantInfo.participantId;
+  const participantId = 1;
 
   // make the call to the api
-  const response = yield call(api.submitSurvey, survey, participantId)
+  const response = yield call(api.submitSurvey, participantId, newSurvey);
 
-  if (response.ok) {
-    // do data conversion here if needed
-    yield put(SurveyActions.saveSurveySuccess())
-  } else {
-    yield put(SurveyActions.saveSurveyFailure())
-  }
+  yield put(SurveyActions.submitSurveySuccess());
+
+  // if (response.ok) {
+  //   // do data conversion here if needed
+  //   yield put(SurveyActions.saveSurveySuccess())
+  // } else {
+  //   yield put(SurveyActions.saveSurveyFailure())
+  // }
 }
