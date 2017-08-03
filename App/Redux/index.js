@@ -8,7 +8,7 @@ export default () => {
   const rootReducer = combineReducers({
     nav: require('./NavigationRedux').reducer,
     survey: require('./SurveyRedux').reducer,
-    setupParticipant: require('./SetupParticipantRedux').reducer,
+    participant: require('./ParticipantRedux').reducer,
     form: formReducer
   })
 
