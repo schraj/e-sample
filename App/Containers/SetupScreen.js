@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { ScrollView, Text, Image, View, Slider, Button, TextInput } from 'react-native'
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import ParticipantActions from '../Redux/ParticipantRedux'
-import { Images } from '../Themes'
+import ParticipantActions from '../Redux/ParticipantRedux';
+import { Images } from '../Themes';
 
 // Styles
 import styles from './Styles/ScreenStyles'
@@ -58,9 +58,9 @@ class SetupScreen extends Component {
     // info
     const timeInfo = this.getSelectedTime();
     let setupInfo = {
-      id: 10,
-      eveningSurveyHour: timeInfo.hour,
-      eveningSurveyMinute: timeInfo.minute
+      participantId: 10,
+      eveningSurveyTimeHour: timeInfo.hour,
+      eveningSurveyTimeMinute: timeInfo.minute
     };
 
     this.props.saveSetupInfo(setupInfo);
@@ -116,7 +116,7 @@ class SetupScreen extends Component {
 const mapDispatchToProps = (dispatch) => ({
   saveSetupInfo: (setupInfo) => {
     console.tron.log({ message: 'in save setup' })
-    dispatch(ParticipantActions.saveParticipantRequest(setupInfo.participantId, eveningSurveyTimeHour, eveningSurveyTimeMinute));
+    dispatch(ParticipantActions.saveParticipantRequest(setupInfo.participantId, setupInfo.eveningSurveyTimeHour, setupInfo.eveningSurveyTimeMinute));
   }
 })
 

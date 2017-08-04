@@ -9,13 +9,28 @@ import styles from './Styles/ScreenStyles'
 class SplashScreen extends Component {
   constructor(props) {
     super(props);
-    //console.tron.log({ message: 'in constructor', object: props });
-    const hasParticipantInfo = props.participantInfo
-      && props.participantInfo.participantId
-      && props.participantInfo.eveningSurveyTime;
+    console.tron.log({ message: 'in constructor', object: props });
+
+    this.doesHaveParticipantInfo = this.doesHaveParticipantInfo.bind(this);
+
     this.state = {
-      hasParticipantInfo
+      hasParticipantInfo: this.doesHaveParticipantInfo(props)
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.tron.log({ message: 'in receive props', object: nextProps });
+
+    this.setState({
+      hasParticipantInfo: this.doesHaveParticipantInfo(nextProps)
+    })
+  }
+
+  doesHaveParticipantInfo(props) {
+    return props.participant
+      && props.participant.participantId
+      && props.participant.eveningSurveyTimeHour
+      && props.participant.eveningSurveyTimeMinute;
   }
 
   render() {
@@ -62,7 +77,7 @@ class SplashScreen extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    participantInfo: state.participantInfo
+    participant: state.participant
   };
 };
 
